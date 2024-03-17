@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Status</title>
+    <style>
+        table {
+            width: 50%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+    <meta http-equiv="refresh" content="15">
+</head>
+<body>
+<h1>Data Status</h1>
+<table>
+    <tr>
+        <th>Status</th>
+        <th>Value</th>
+        <th>Status</th>
+    </tr>
+    <tr id="waterRow">
+        <td>Water</td>
+        <td id="waterValue"></td>
+        <td id="waterStatus"></td>
+    </tr>
+    <tr id="windRow">
+        <td>Wind</td>
+        <td id="windValue"></td>
+        <td id="windStatus"></td>
+    </tr>
+</table>
+
+<script>
+
+    function fetchData() {
+        fetch('/data')
+            .then(response => response.json())
+            .then(data => {
+
+                const waterValueElement = document.getElementById('waterValue');
+                const windValueElement = document.getElementById('windValue');
+                const waterStatusElement = document.getElementById('waterStatus');
+                const windStatusElement = document.getElementById('windStatus');
+
+                waterValueElement.textContent = data.status.water;
+                windValueElement.textContent = data.status.wind;
+                waterStatusElement.textContent = data.status.water_status;
+                windStatusElement.textContent = data.status.wind_status;
+
+                // if (waterValueElement < 5)
+                //     waterStatusElement.textContent = "Aman"
+                // else if (waterValueElement >= 6 && waterValueElement <= 8)
+                //     waterStatusElement.textContent = "Siaga"
+                // else
+                //     waterStatusElement.textContent = "Bahaya"
+                //
+                //
+                // if (windValueElement < 5)
+                //     windStatusElement.textContent = "Aman"
+                // else if (windValueElement >= 6 && windValueElement <= 8)
+                //     windStatusElement.textContent = "Siaga"
+                // else
+                //     windStatusElement.textContent = "Bahaya"
+
+            })
+            .catch(error => console.error('Error:', error));
+    }
+    fetchData();
+</script>
+</body>
+</html>
